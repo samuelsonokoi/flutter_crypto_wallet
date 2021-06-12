@@ -45,7 +45,7 @@ class _AuthenticationState extends State<Authentication> {
                     controller: _emailField,
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 30,
+                      fontSize: 20,
                     ),
                     decoration: InputDecoration(
                       labelText: 'Email',
@@ -83,7 +83,7 @@ class _AuthenticationState extends State<Authentication> {
                     ),
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 30,
+                      fontSize: 20,
                     ),
                   ),
                 ),

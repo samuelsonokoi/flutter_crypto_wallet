@@ -12,6 +12,12 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final Stream<QuerySnapshot> _coinsStream = FirebaseFirestore.instance
+      .collection('users')
+      .doc(FirebaseAuth.instance.currentUser!.uid)
+      .collection('coins')
+      .snapshots(includeMetadataChanges: true);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,13 +30,41 @@ class _HomeState extends State<Home> {
           ),
           child: Padding(
             padding: const EdgeInsets.all(20.0),
-            child: StreamBuilder(
+            child: StreamBuilder<QuerySnapshot>(
               // get coins from user collections
-              stream: FirebaseFirestore.instance
-                  .collection('users')
-                  .doc(FirebaseAuth.instance.currentUser!.uid)
-                  .collection('coins')
-                  .snapshots(),
+              stream: _coinsStream,
+              // builder: (BuildContext context,
+              //     AsyncSnapshot<QuerySnapshot> snapshot) {
+              //   // display error
+              //   if (snapshot.hasError) {
+              //     return Text('Something went wrong');
+              //   }
+
+              //   // show a spinner if the data is not available
+              //   if (snapshot.connectionState == ConnectionState.waiting) {
+              //     return Center(
+              //       child: CircularProgressIndicator(),
+              //     );
+              //   }
+
+              //   // return listview to show data
+              //   return ListView(
+              //     children: snapshot.data!.docs.map((doc) {
+              //       // extract and hold data
+              //       Map<String, dynamic> data =
+              //           snapshot.data!.docs as Map<String, dynamic>;
+              //       return Container(
+              //         child: Row(
+              //           mainAxisAlignment: MainAxisAlignment.spaceAround,
+              //           children: [
+              //             Text("Coin Name: ${doc.id}"),
+              //             Text("Amount Owned: ${data['amount']}"),
+              //           ],
+              //         ),
+              //       );
+              //     }).toList(),
+              //   );
+              // },
               builder: (BuildContext context,
                   AsyncSnapshot<QuerySnapshot> snapshot) {
                 // display error
@@ -45,20 +79,13 @@ class _HomeState extends State<Home> {
                   );
                 }
 
-                // return listview to show data
-                return ListView(
-                  children: snapshot.data!.docs.map((doc) {
-                    // extract and hold data
+                return new ListView(
+                  children: snapshot.data!.docs.map((DocumentSnapshot doc) {
                     Map<String, dynamic> data =
-                        snapshot.data!.docs as Map<String, dynamic>;
-                    return Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Text("Coin Name: ${doc.id}"),
-                          Text("Amount Owned: ${data['amount']}"),
-                        ],
-                      ),
+                        doc.data() as Map<String, dynamic>;
+                    return new ListTile(
+                      title: new Text("Coin Name: ${doc.id}"),
+                      subtitle: new Text("Amount Owned: ${data['amount']}"),
                     );
                   }).toList(),
                 );

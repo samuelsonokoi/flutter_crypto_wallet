@@ -81,6 +81,10 @@ class _AddViewState extends State<AddView> {
                 ),
                 child: MaterialButton(
                   onPressed: () async => {
+                    // display spinner while loading
+                    Center(
+                      child: CircularProgressIndicator(),
+                    ),
                     // perform addCoin action
                     await addCoin(dropdownValue, _amountController.text),
                     // navigate to home page if successful.

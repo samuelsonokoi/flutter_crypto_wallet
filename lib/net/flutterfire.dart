@@ -46,12 +46,12 @@ Future<bool> addCoin(String id, String amount) async {
     return FirebaseFirestore.instance.runTransaction((transaction) async {
       DocumentSnapshot snapshot = await transaction.get(ref);
       if (!snapshot.exists) {
-        ref.set({amount: amount});
+        ref.set({'amount': value});
         return true;
       }
       var data = snapshot.data() as Map<String, dynamic>;
-      double newAmount = data['amount'] + value;
-      transaction.update(ref, {amount: newAmount});
+      double newAmount = double.parse(data['amount']) + value;
+      transaction.update(ref, {'amount': newAmount});
       return true;
     });
   } catch (e) {
