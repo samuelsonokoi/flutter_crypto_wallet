@@ -29,38 +29,61 @@ class _AuthenticationState extends State<Authentication> {
           padding: const EdgeInsets.all(20.0),
           child: SafeArea(
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                TextFormField(
-                  controller: _emailField,
-                  decoration: InputDecoration(
-                    labelText: 'Email',
-                    labelStyle: TextStyle(
+                Icon(
+                  Icons.person_pin_rounded,
+                  size: 70,
+                  color: Colors.white,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width / 1.3,
+                  child: TextFormField(
+                    controller: _emailField,
+                    style: TextStyle(
                       color: Colors.white,
-                      fontSize: 25,
+                      fontSize: 30,
                     ),
-                    hintText: 'example@email.com',
-                    hintStyle: TextStyle(
-                      color: Colors.white,
-                      fontSize: 25,
+                    decoration: InputDecoration(
+                      labelText: 'Email',
+                      labelStyle: TextStyle(
+                        color: Colors.white,
+                        fontSize: 25,
+                      ),
+                      hintText: 'example@email.com',
+                      hintStyle: TextStyle(
+                        color: Colors.white,
+                        fontSize: 25,
+                      ),
                     ),
                   ),
                 ),
                 SizedBox(
                   height: 10,
                 ),
-                TextFormField(
-                  controller: _passwordField,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    labelText: 'Password',
-                    labelStyle: TextStyle(
-                      color: Colors.white,
-                      fontSize: 25,
+                Container(
+                  width: MediaQuery.of(context).size.width / 1.3,
+                  child: TextFormField(
+                    controller: _passwordField,
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      labelText: 'Password',
+                      labelStyle: TextStyle(
+                        color: Colors.white,
+                        fontSize: 25,
+                      ),
+                      hintText: 'password',
+                      hintStyle: TextStyle(
+                        color: Colors.white,
+                        fontSize: 25,
+                      ),
                     ),
-                    hintText: 'password',
-                    hintStyle: TextStyle(
+                    style: TextStyle(
                       color: Colors.white,
-                      fontSize: 25,
+                      fontSize: 30,
                     ),
                   ),
                 ),
@@ -74,7 +97,7 @@ class _AuthenticationState extends State<Authentication> {
                       width: MediaQuery.of(context).size.width / 2.5,
                       height: 45,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(8),
                         color: Colors.white,
                       ),
                       child: MaterialButton(
@@ -92,14 +115,19 @@ class _AuthenticationState extends State<Authentication> {
                               ),
                             },
                         },
-                        child: Text('Sign In'),
+                        child: Text(
+                          'Sign In',
+                          style: TextStyle(
+                            fontSize: 20,
+                          ),
+                        ),
                       ),
                     ),
                     Container(
                       width: MediaQuery.of(context).size.width / 2.5,
                       height: 45,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(8),
                         color: Colors.white,
                       ),
                       child: MaterialButton(
@@ -117,7 +145,12 @@ class _AuthenticationState extends State<Authentication> {
                               ),
                             },
                         },
-                        child: Text('Sign Up'),
+                        child: Text(
+                          'Sign Up',
+                          style: TextStyle(
+                            fontSize: 20,
+                          ),
+                        ),
                       ),
                     ),
                   ],

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 // Sign In method
@@ -27,6 +28,32 @@ Future<bool> signUp(String email, String password) async {
       print('An account already exists for that email');
     }
     return false;
+  } catch (e) {
+    print(e.toString());
+    return false;
+  }
+}
+
+Future<bool> addCoin(String id, String amount) async {
+  try {
+    String uid = FirebaseAuth.instance.currentUser!.uid;
+    double value = double.parse(amount);
+    DocumentReference ref = FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .collection('coins')
+        .doc(id);
+    return FirebaseFirestore.instance.runTransaction((transaction) async {
+      DocumentSnapshot snapshot = await transaction.get(ref);
+      if (!snapshot.exists) {
+        ref.set({amount: amount});
+        return true;
+      }
+      var data = snapshot.data() as Map<String, dynamic>;
+      double newAmount = data['amount'] + value;
+      transaction.update(ref, {amount: newAmount});
+      return true;
+    });
   } catch (e) {
     print(e.toString());
     return false;
