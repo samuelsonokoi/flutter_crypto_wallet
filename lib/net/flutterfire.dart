@@ -50,10 +50,26 @@ Future<bool> addCoin(String id, String amount) async {
         return true;
       }
       var data = snapshot.data() as Map<String, dynamic>;
-      double newAmount = double.parse(data['amount']) + value;
+      double newAmount = data['amount'] + value;
       transaction.update(ref, {'amount': newAmount});
       return true;
     });
+  } catch (e) {
+    print(e.toString());
+    return false;
+  }
+}
+
+Future<bool> removeCoin(String id) async {
+  try {
+    String uid = FirebaseAuth.instance.currentUser!.uid;
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .collection('coins')
+        .doc(id)
+        .delete();
+    return true;
   } catch (e) {
     print(e.toString());
     return false;

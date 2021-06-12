@@ -15,7 +15,7 @@ class _AddViewState extends State<AddView> {
   List<String> coins = [
     'bitcoin',
     'ethereum',
-    'dodge',
+    'dogecoin',
     'tether',
   ];
 
